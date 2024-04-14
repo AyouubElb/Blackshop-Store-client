@@ -37,7 +37,7 @@
                   <router-link
                     class="action-button"
                     :to="{
-                      name: 'DetailPage',
+                      name: 'InfoPage',
                       params: { path: page.slug },
                       query: { id: page._id },
                     }"

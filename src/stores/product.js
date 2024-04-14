@@ -142,6 +142,7 @@ export const useProducStore = defineStore("ProductStore", {
           `${this.API_URL}/pages/update/${id}`,
           page
         );
+        console.log("upated page: ", res.data);
         return res.data;
       } catch (error) {
         console.log(error);

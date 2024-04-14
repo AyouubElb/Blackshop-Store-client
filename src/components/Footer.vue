@@ -37,7 +37,7 @@
             >
               <router-link
                 :to="{
-                  name: 'DetailPage',
+                  name: 'InfoPage',
                   params: { path: link.slug },
                   query: { id: link._id },
                 }"
@@ -78,6 +78,7 @@ const menuList = reactive([]);
 onMounted(() => {
   productStore.fetchAllMenus().then((res) => {
     menuList.splice(0, menuList.length, ...res);
+    console.log("menuList", menuList);
   });
 });
 </script>

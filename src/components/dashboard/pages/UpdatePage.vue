@@ -74,11 +74,12 @@ const addDescription = (description) => {
 };
 
 const updatePage = () => {
-  const formData = new FormData();
-  formData.append("name", pageName.value);
-  formData.append("slug", pageSlug.value);
-  formData.append("description", pageDesc.value);
-  productStore.updatePage(pageId.value, formData).then((res) => {
+  const pageData = {};
+  pageData.name = pageName.value;
+  pageData.slug = pageSlug.value;
+  pageData.description = pageDesc.value;
+
+  productStore.updatePage(pageId.value, pageData).then((res) => {
     pageName.value = res.name;
     pageSlug.value = res.slug;
     pageDesc.value = res.description;

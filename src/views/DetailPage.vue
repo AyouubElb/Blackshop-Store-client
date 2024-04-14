@@ -27,6 +27,7 @@ onMounted(() => {
   const pageId = route.query.id;
   productStore.fetchPageById(pageId).then((res) => {
     pageInfo.value = res;
+    console.log("pageDesc", pageInfo.value.description);
   });
 });
 </script>
