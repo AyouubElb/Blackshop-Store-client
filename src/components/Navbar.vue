@@ -66,13 +66,13 @@
           <input
             class="form-control"
             type="search"
-            placeholder="البحث عن المنتج"
+            placeholder="Search for product"
             aria-label="Search"
           />
         </form>
         <ul class="nav-bar-categories mx-auto my-auto">
           <li class="ms-auto">
-            <router-link to="/">الصفحة الرئيسية</router-link>
+            <router-link to="/">Home</router-link>
           </li>
           <li
             class="ms-auto"
@@ -88,9 +88,6 @@
             >
               {{ category.name }}
             </router-link>
-          </li>
-          <li class="ms-auto">
-            <router-link to="#">اتصل بنا</router-link>
           </li>
         </ul>
       </div>
