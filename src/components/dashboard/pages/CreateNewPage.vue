@@ -48,14 +48,15 @@
 </template>
 <script setup>
 import TextEditor from "@/components/dashboard/TextEditor.vue";
+import toastr from "toastr";
 import { ref, reactive } from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
 
-const pageName = ref(null);
-const pageSlug = ref(null);
-const pageDesc = ref(null);
+const pageName = ref("");
+const pageSlug = ref("");
+const pageDesc = ref("");
 
 const addDescription = (description) => {
   pageDesc.value = description;
@@ -63,11 +64,15 @@ const addDescription = (description) => {
 
 const savePage = () => {
   const formData = new FormData();
+  console.log("name", pageName.value);
   formData.append("name", pageName.value);
   formData.append("slug", pageSlug.value);
   formData.append("description", pageDesc.value);
-  console.log("formData", formData);
-  productStore.createPage(formData);
+  productStore.createPage(formData).then((res) => {
+    toastr.success(`${res.name} page is created successFully`, "New Page", {
+      positionClass: "toast-up-right",
+    });
+  });
 };
 </script>
 <style>

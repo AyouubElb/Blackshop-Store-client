@@ -55,18 +55,21 @@ const categoryClicked = (category) => {
   cursor: pointer;
   border-radius: 4px;
 }
-
+.category-card:nth-child(n) {
+  animation: scroll-fst-last linear;
+  animation-timeline: scroll();
+}
 .category-card:nth-child(1) {
   /* transform: translate3d(0px, -4%, 0px) scale3d(1, 1, 1) rotateX(0deg)
     rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); */
-  animation: scroll-fst-last linear;
-  animation-timeline: scroll();
+  /* animation: scroll-fst-last linear;
+  animation-timeline: scroll(); */
 }
 .category-card:nth-child(2) {
   /* transform: translate3d(0px, 0%, 0px) scale3d(1, 1, 1) rotateX(0deg)
     rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); */
-  animation: scroll-middle linear;
-  animation-timeline: scroll();
+  /* animation: scroll-middle linear;
+  animation-timeline: scroll(); */
 }
 @keyframes scroll-middle {
   to {
@@ -77,8 +80,8 @@ const categoryClicked = (category) => {
 .category-card:nth-child(3) {
   /* transform: translate3d(0px, -4%, 0px) scale3d(1, 1, 1) rotateX(0deg)
     rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); */
-  animation: scroll-fst-last linear;
-  animation-timeline: scroll();
+  /* animation: scroll-fst-last linear;
+  animation-timeline: scroll(); */
 }
 
 @keyframes scroll-fst-last {
@@ -100,6 +103,9 @@ const categoryClicked = (category) => {
 }
 .category-overlay:hover {
   background-color: transparent;
+}
+.category-image-container {
+  position: relative;
 }
 .category-image-container img {
   height: 700px;
@@ -133,7 +139,6 @@ const categoryClicked = (category) => {
   transform: rotate(90deg);
 }
 .category-name .category-text {
-  font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
   width: 20px;
   height: 160px;

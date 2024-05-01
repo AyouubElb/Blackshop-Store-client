@@ -49,7 +49,7 @@ a {
 }
 
 body {
-  /* font-family: "Rubik", sans-serif; */
+  /* font-family: "Rubik", sans-serif !important; */
   font-family: "Archivo", "Rubik", sans-serif !important;
   color: #1a1a1a !important;
   background-color: #e1dedb !important;

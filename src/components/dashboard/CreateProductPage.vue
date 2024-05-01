@@ -330,6 +330,7 @@
 <script setup>
 import TextEditor from "@/components/dashboard/TextEditor.vue";
 import imageModal from "@/components/dashboard/imageModal.vue";
+import toastr from "toastr";
 import { ref, reactive, onMounted } from "vue";
 import { useProducStore } from "@/stores/product";
 
@@ -468,7 +469,11 @@ const saveProduct = () => {
     formData.append("images", image);
   });
 
-  productStore.createProduct(formData);
+  productStore.createProduct(formData).then(() => {
+    toastr.success("Product is created successFully", "New Product", {
+      positionClass: "toast-top-right",
+    });
+  });
 };
 </script>
 <style>

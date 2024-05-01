@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+import "toastr/build/toastr.css";
 import { registerLicense } from "@syncfusion/ej2-base";
 
 registerLicense(

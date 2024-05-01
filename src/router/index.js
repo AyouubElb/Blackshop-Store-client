@@ -142,6 +142,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "checkoutPage"*/ "@/views/checkoutPage"),
   },
+  {
+    path: "/client-info",
+    name: "ClientInfo",
+    component: () =>
+      import(/* webpackChunkName: "checkoutPage"*/ "@/views/ClientInfo"),
+  },
 ];
 
 const router = createRouter({

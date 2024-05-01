@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import toastr from "toastr";
 
 export const useProducStore = defineStore("ProductStore", {
   state: () => {
@@ -12,20 +13,20 @@ export const useProducStore = defineStore("ProductStore", {
   },
   getters: {},
   actions: {
-    async fetchAllProducts(sortBy, order) {
+    async fetchAllProducts(sortBy = "createdAt", order = "desc", limit = 10) {
       try {
         const res = await axios.get(
-          `${this.API_URL}/products?sortBy=${sortBy}&order=${order}`
+          `${this.API_URL}/products?sortBy=${sortBy}&order=${order}&limit=${limit}`
         );
         return res.data.products;
       } catch (error) {
         console.log(error);
       }
     },
-    async searchProducts(filters) {
+    async searchProducts(sortBy = "createdAt", order = "desc", filters) {
       try {
         const res = await axios.post(
-          `${this.API_URL}/products/search-products`,
+          `${this.API_URL}/products/search-products?sortBy=${sortBy}&order=${order}`,
           { filters: filters }
         );
         return res.data.products;
@@ -42,14 +43,19 @@ export const useProducStore = defineStore("ProductStore", {
       }
     },
     async createProduct(product) {
+      console.log("productInfo", product);
       try {
         const res = await axios.post(
           `${this.API_URL}/products/create`,
           product
         );
+        console.log("New Product", res.data);
         return res.data;
       } catch (error) {
         console.log(error);
+        toastr.error(error, "Server Error!", {
+          positionClass: "toast-bottom-left",
+        });
       }
     },
     async deleteProduct(id) {
@@ -136,6 +142,7 @@ export const useProducStore = defineStore("ProductStore", {
         console.log(error);
       }
     },
+
     async updatePage(id, page) {
       try {
         const res = await axios.patch(

@@ -1,6 +1,9 @@
 <template>
   <div class="product-container" v-if="productInfo">
     <div class="product-section-container">
+      <div class="product-hero" data-aos="fade-up" data-aos-duration="500">
+        <img :src="mainImage" :alt="productInfo.name" />
+      </div>
       <div
         class="product-detail-container"
         data-aos="fade-up"
@@ -8,13 +11,13 @@
       >
         <div class="category-text">Hoodies -</div>
         <div class="product-name-text">{{ productInfo.name }}</div>
-        <h4 class="product-price-text">MAD {{ productInfo.price }}</h4>
+        <h4 class="product-price-text">€{{ productInfo.price }}</h4>
         <div class="option">
-          <label class="category-text-gold">اللون المختار</label>
+          <label class="category-text-gold">Selected Color</label>
           <div class="option-item">
             <div
               class="option-color-img"
-              :class="{ 'active-img': activeIndex === index }"
+              :class="{ 'active-img': imageIndex === index }"
               v-for="(image, index) in productInfo.images"
               :key="index"
               @click="selectColor(index)"
@@ -24,7 +27,7 @@
           </div>
         </div>
         <div class="option">
-          <label class="category-text-gold">المقاسات</label>
+          <label class="category-text-gold">Sizes</label>
           <div class="option-item">
             <div v-for="(size, index) in productInfo.sizes" :key="index">
               <button
@@ -36,56 +39,24 @@
             </div>
           </div>
         </div>
-        <div class="checkout-form">
-          <div class="checkout-group mb-3">
-            <h2 class="checkout-heading">معلومات الزبون</h2>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="رقم الهاتف (سنتصل بك لتأكيد الطلب)"
-              v-model="clientInfo.phone"
-            />
-            <input
-              type="email"
-              class="form-control"
-              placeholder="اسم كامل"
-              v-model="clientInfo.fullname"
-            />
-            <input
-              type="email"
-              class="form-control"
-              placeholder="العنوان"
-              v-model="clientInfo.address"
-            />
-            <input
-              type="email"
-              class="form-control"
-              placeholder="المدينة"
-              v-model="clientInfo.city"
-            />
-            <input
-              type="email"
-              class="form-control"
-              placeholder="اترك لنا تعليق أو استفسار"
-              v-model="clientInfo.review"
-            />
+        <div class="option">
+          <label class="category-text-gold">Quantity</label>
+          <div class="quantity-input">
+            <input type="number" v-model="productQuantity" min="1" />
           </div>
         </div>
         <div class="quantity-add-btn-container">
-          <button class="add-to-cart-btn" @click="orderProduct">
-            <!-- <i class="bi bi-cart2"></i> -->
-            <span>إشتري الآن </span>
+          <button
+            class="add-to-cart-btn"
+            @click="addToCart()"
+            data-bs-toggle="offcanvas"
+            href="#productCart"
+            aria-controls="offcanvasExample"
+          >
+            <i class="bi bi-cart2"></i>
+            <span>Add To Cart</span>
           </button>
-          <div class="option">
-            <label class="category-text-gold">كمية</label>
-            <div class="quantity-input">
-              <input type="number" v-model="productQuantity" min="1" />
-            </div>
-          </div>
         </div>
-      </div>
-      <div class="product-hero" data-aos="fade-up" data-aos-duration="500">
-        <img :src="mainImage" :alt="productInfo.name" />
       </div>
     </div>
     <div
@@ -93,7 +64,7 @@
       data-aos="fade-up"
       data-aos-duration="1000"
     >
-      <h4>معلومات المنتج</h4>
+      <h4>Description</h4>
       <div class="desc-review-content">
         <p v-html="productInfo.description"></p>
       </div>
@@ -137,7 +108,7 @@
       </div>
     </div> -->
     <div class="related-Prod-section-container">
-      <h4>المنتجات المشابهة</h4>
+      <h4>Related Products</h4>
       <ProductsHolder
         :products="productInfo.relativeProducts"
         data-aos="fade-up"
@@ -151,6 +122,7 @@
 import Footer from "@/components/Footer.vue";
 import ProductsHolder from "@/components/ProductsHolder.vue";
 import checkoutModal from "@/components/checkoutModal.vue";
+import toastr from "toastr";
 import { reactive, ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
@@ -161,58 +133,37 @@ const productStore = useProducStore();
 const router = useRouter();
 
 const mainImage = ref();
-const activeIndex = ref(0);
+const imageIndex = ref(0);
 const productInfo = ref();
-const activeSize = ref(null);
+const activeSize = ref();
 const productQuantity = ref(1);
 
-const clientInfo = reactive({
-  fullname: "",
-  phone: "",
-  city: "",
-  address: "",
-  review: "",
-});
-
-// const rules = reactive({
-//   fullname: { required },
-//   phone: { required },
-//   city: { required },
-//   address: { required },
-//   review: { required },
-// });
-
-// const v$ = useVuelidate(rules, clientInfo);
-
-const orderProduct = () => {
-  // v$.$validate();
-  // if (!v$.$error) {
-  //   alert("form submitted successfully !");
-  // } else {
-  //   alert("form validation failed !");
-  // }
-
-  const orderData = {};
-
-  for (let key in clientInfo) {
-    orderData[key] = clientInfo[key];
+const addToCart = () => {
+  //check if all required info selected
+  if (!activeSize.value) {
+    toastr.error("Choose product size!", "Attention", {
+      positionClass: "toast-top-right",
+    });
+    return;
   }
 
-  orderData.product = productInfo.value._id;
-
-  const color = productInfo.value.images[activeIndex.value].color;
-  orderData.color = color;
-
-  orderData.size = activeSize.value;
-
-  orderData.quantity = productQuantity.value;
-
-  productStore.newOrder(orderData).then((res) => {
-    console.log("order info", res);
-    // Redirect to checkout page
-    const queryParam = { id: res._id };
-    router.push({ name: "checkoutPage", query: queryParam });
-  });
+  // search if product allready exist in cartList
+  let index = productStore.cartList.findIndex(
+    (item) => item.product === productInfo.value._id
+  );
+  if (index !== -1) {
+    productStore.cartList[index].quantity += productQuantity.value;
+  } else {
+    productStore.cartList.push({
+      product: productInfo.value._id,
+      name: productInfo.value.name,
+      price: productInfo.value.price,
+      image: productInfo.value.images[imageIndex.value].file,
+      color: productInfo.value.images[imageIndex.value].color,
+      size: activeSize.value,
+      quantity: productQuantity.value,
+    });
+  }
 };
 
 onMounted(() => {
@@ -243,7 +194,7 @@ onMounted(() => {
 });
 
 const selectColor = (index) => {
-  activeIndex.value = index;
+  imageIndex.value = index;
   mainImage.value = productInfo.value.images[index].file;
 };
 
@@ -295,16 +246,15 @@ const rightSlide = () => {
   grid-column-gap: 80px;
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  padding: 6rem 3.5rem 0;
+  padding: 7rem 3.5rem 0;
 }
 .product-detail-container {
-  grid-column: 1 / span 3;
+  grid-column: 4 / span 3;
   display: flex;
   flex-direction: column;
-  text-align: end;
 }
 .product-hero {
-  grid-column: 4 / span 3;
+  grid-column: 1 / span 3;
 }
 .product-detail-container .category-text {
   color: #bf8c4e;
@@ -317,45 +267,21 @@ const rightSlide = () => {
   font-weight: 500;
 }
 .product-detail-container .product-price-text {
-  font-family: "Rubik", sans-serif;
   color: #bf8c4e;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 300;
   line-height: 1.2;
   margin: 4px 0px 20px;
 }
 .product-detail-container .option {
   margin-bottom: 1.5rem;
-  margin-left: auto;
 }
 .option .category-text-gold {
-  font-family: "Rubik", sans-serif;
   color: #bf8c4e;
   text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-.checkout-group {
-  align-items: flex-end;
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 1rem;
-}
-.checkout-group .checkout-heading {
-  font-size: 15px;
-  font-weight: 500;
-  width: 100%;
-}
-.checkout-group .form-control {
   font-size: 14px;
-  height: 45px;
-  text-align: end;
-  width: calc(50% - 0.5rem);
-  margin: 0 0 15px;
-}
-.checkout-group .form-control:last-of-type {
-  width: 100%;
+  font-weight: 500;
+  margin-bottom: 4px;
 }
 .option .option-item {
   display: flex;
@@ -364,7 +290,7 @@ const rightSlide = () => {
 }
 .option .option-item .option-color-img img {
   width: 73px;
-  height: 70px;
+  height: 85px;
   border-radius: 4px;
   cursor: pointer;
 }
@@ -397,18 +323,11 @@ const rightSlide = () => {
   padding: 14px 18px;
   font-size: 16px;
 }
-.quantity-add-btn-container {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
 .add-to-cart-btn {
   display: flex;
   gap: 10px;
   justify-content: center;
-  width: -webkit-fill-available;
   height: fit-content;
-  font-family: "Rubik", sans-serif;
   color: #fff;
   background-color: #1a1a1a;
   border: none;
@@ -430,15 +349,13 @@ const rightSlide = () => {
   margin-bottom: auto;
 }
 .description-section-container {
-  font-family: "Rubik", sans-serif;
-  text-align: end;
   padding: 4rem 3.5rem;
 }
 .product-container h4 {
   font-size: 30px;
   font-weight: 400;
   line-height: 1.2;
-  margin: 10px 0 2.5rem;
+  margin: 10px 0 1.5rem;
 }
 .desc-review-content p {
   color: #888;

@@ -23,13 +23,33 @@
         data-aos="fade-up"
         data-aos-duration="1000"
       >
+        <div class="footer-text-col">
+          <div class="footer-text-title">Categories</div>
+          <ul class="footer-link-block p-0">
+            <li
+              class="link"
+              v-for="(category, index) in categoryList"
+              :key="index"
+            >
+              <router-link
+                :to="{
+                  name: 'ProductsPage',
+                  params: { id: category.name.split(' ').join('-') },
+                }"
+                @click="productStore.selectedCategory = category"
+              >
+                {{ category.name }}
+              </router-link>
+            </li>
+          </ul>
+        </div>
         <div
           class="footer-text-col"
           v-for="(menu, parentIndex) in menuList"
           :key="parentIndex"
         >
           <div class="footer-text-title">{{ menu.name }}</div>
-          <ul class="footer-link-block">
+          <ul class="footer-link-block p-0">
             <li
               class="link"
               v-for="(link, childIndex) in menu.links"
@@ -49,18 +69,15 @@
         </div>
         <div class="footer-text-col">
           <div class="footer-text-title"></div>
-          <ul class="footer-link-block">
+          <ul class="footer-link-block p-0">
             <li class="link">
-              <i class="bi bi-facebook"></i>
+              <img src="../assets/icons/facebook.svg" alt="" />
             </li>
             <li class="link">
-              <i class="bi bi-twitter-x"></i>
+              <img src="../assets/icons/instagram.svg" alt="" />
             </li>
             <li class="link">
-              <i class="bi bi-youtube"></i>
-            </li>
-            <li class="link">
-              <i class="bi bi-instagram"></i>
+              <img src="../assets/icons/twitterx.svg" alt="" />
             </li>
           </ul>
         </div>
@@ -73,12 +90,17 @@ import { reactive, onMounted } from "vue";
 import { useProducStore } from "@/stores/product";
 const productStore = useProducStore();
 
+const categoryList = reactive([]);
 const menuList = reactive([]);
 
 onMounted(() => {
+  // fetch categories
+  productStore.fetchCategories().then((res) => {
+    categoryList.splice(0, categoryList.length, ...res);
+  });
+  // fetch menus
   productStore.fetchAllMenus().then((res) => {
     menuList.splice(0, menuList.length, ...res);
-    console.log("menuList", menuList);
   });
 });
 </script>
@@ -91,6 +113,7 @@ onMounted(() => {
   position: absolute;
   z-index: 2;
   margin-top: -20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 .infinite-loop-handler {
   display: flex;
@@ -173,7 +196,6 @@ onMounted(() => {
   color: white;
   font-size: 18px;
   margin-bottom: 20px;
-  text-align: end;
 }
 .footer-link-block {
   display: flex;
@@ -181,8 +203,8 @@ onMounted(() => {
 }
 .footer-link-block .link {
   cursor: pointer;
-  text-align: end;
   margin-bottom: 8px;
+  width: max-content;
 }
 .footer-link-block .link a {
   color: #888;
@@ -194,7 +216,9 @@ onMounted(() => {
 .footer-link-block .link a:hover {
   color: #fff;
 }
-
+.footer-link-block .link img {
+  width: 30px;
+}
 /* Media queries */
 @media only screen and (max-width: 768px) {
   .infinite-text,

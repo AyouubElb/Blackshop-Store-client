@@ -1,20 +1,20 @@
 <template>
   <div class="newest-product-container">
     <div class="title-holder">
-      <div class="right-alighted-text">
-        <h1>المنتجات</h1>
-      </div>
       <div class="left-alighted-text">
-        <h1>الأكثر مبيعا</h1>
+        <h1>Newest</h1>
+      </div>
+      <div class="right-alighted-text ms-auto">
+        <h1>Products</h1>
       </div>
     </div>
-    <div class="view-all-link">
+    <div class="view-all-link ms-auto">
+      <div class="text">View All</div>
       <div class="arrow-icon">
-        <i class="bi bi-arrow-left-short"></i>
+        <i class="bi bi-arrow-right-short"></i>
       </div>
-      <div class="text">استعراض المزيد</div>
     </div>
-    <ProductsHolder :products="bestSellerProducts" />
+    <ProductsHolder :products="NewestProducts" />
   </div>
 </template>
 <script setup>
@@ -23,28 +23,17 @@ import { reactive, onMounted } from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
-const bestSellerProducts = reactive([]);
+const NewestProducts = reactive([]);
+const productList = reactive([]);
 
 onMounted(() => {
-  let bestSellerCategory = {};
-  productStore
-    .fetchCategories()
-    .then((res) => {
-      bestSellerCategory = res.find((value) => value.name === "الأكثر مبيعا");
-    })
-    .then(() => {
-      const filters = {
-        categories: bestSellerCategory._id,
-      };
-      productStore.searchProducts(filters).then((res) => {
-        const data = res.map((value) => {
-          value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
-          return value;
-        });
-        bestSellerProducts.splice(0, bestSellerProducts.lenght, ...data);
-      });
-    })
-    .catch((error) => console.log(error));
+  productStore.fetchAllProducts("createdAt", "desc", 4).then((res) => {
+    const data = res.map((value) => {
+      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      return value;
+    });
+    NewestProducts.splice(0, NewestProducts.length, ...data);
+  });
 });
 </script>
 <style>
@@ -55,7 +44,6 @@ onMounted(() => {
   margin-bottom: 4.5rem;
 }
 .title-holder h1 {
-  font-family: "Rubik", sans-serif;
   font-size: 100px;
   font-weight: 700;
   text-transform: uppercase;
@@ -85,7 +73,6 @@ onMounted(() => {
 }
 .right-alighted-text {
   color: #fff;
-  margin-left: auto;
 
   /* animation: scroll-text-right linear;
   animation-timeline: view(); */
@@ -104,7 +91,7 @@ onMounted(() => {
 .view-all-link {
   display: flex;
   cursor: pointer;
-  margin-left: 2rem;
+  margin-right: 2rem;
 }
 .view-all-link .text {
   font-family: "Rubik", sans-serif;
@@ -112,7 +99,7 @@ onMounted(() => {
   font-weight: 500;
   margin: auto 0;
 }
-.view-all-link .text:hover {
+.view-all-link:hover {
   color: #bf8c4e;
 }
 .view-all-link .arrow-icon {

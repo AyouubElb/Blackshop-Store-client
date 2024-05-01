@@ -27,9 +27,7 @@
               }"
               >{{ product.name }}</router-link
             >
-            <div class="product-price">
-              <span>MAD</span> {{ product.price }}
-            </div>
+            <div class="product-price"><span>€</span>{{ product.price }}</div>
           </div>
           <div
             class="add-to-cart-icon"
@@ -91,8 +89,7 @@ const addToCart = (product) => {
 }
 .product-card-detail-container {
   display: flex;
-  height: 125px;
-  padding: 14px 18px;
+  padding: 10px 18px;
   background-color: #fff;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;

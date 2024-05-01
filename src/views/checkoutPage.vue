@@ -5,79 +5,80 @@
         <div class="mb-3">
           <img src="../assets/icons/thanks-icon.svg" alt="" />
         </div>
-        <h1 class="heading-primary">شكرا جزيلاً على ثقتكم</h1>
+        <h1 class="heading-primary">Thank you for your trust</h1>
         <div class="actions">
-          <button class="btn btn-dark px-4 py-2">
-            <router-link to="/">استمر في التسوق</router-link>
+          <button class="btn">
+            <router-link to="/">Continue Shopping</router-link>
           </button>
         </div>
       </div>
       <div class="single-order">
         <div class="single-order-header">
           <div class="order-item">
-            <h2>الوضعيات</h2>
-            <p class="unpaid">مبلغ غير مدفوع</p>
+            <h2>Status</h2>
+            <p class="unpaid">Unpaid amount</p>
           </div>
           <div class="order-item">
-            <h2>معلومات الدفع</h2>
-            <p>الدفع نقدا عند التسليم</p>
+            <h2>Payment Information</h2>
+            <p>Cash on delivery</p>
           </div>
         </div>
-        <table class="table mb-0" v-if="orderInfo && orderInfo.product">
+        <table class="table mb-0" v-if="orderInfo && orderInfo.productList">
           <thead>
             <tr>
-              <th scope="col">المجموع</th>
-              <th scope="col">الكمية</th>
-              <th scope="col">ثمن القطعة</th>
-              <th scope="col">المنتج</th>
+              <th scope="col">Product</th>
+              <th scope="col">Product price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>MAD {{ orderInfo.product.price }}</td>
-              <td>{{ orderInfo.quantity }}</td>
-              <td>MAD {{ totalPrice }}</td>
+            <tr v-for="(item, index) in orderInfo.productList" :key="index">
               <td class="product-detail">
-                <img :src="imageUrl" :alt="orderInfo.product.name" />
+                <img :src="imageUrl(index)" :alt="item.product.name" />
                 <div class="detail-text">
                   <router-link
                     :to="{
                       name: 'SingleProductPage',
                       params: {
-                        path: orderInfo.product.name.split(' ').join('-'),
+                        path: item.product.name.split(' ').join('-'),
                       },
-                      query: { id: orderInfo.product._id },
+                      query: { id: item.product._id },
                     }"
                     class="title"
-                    >{{ orderInfo.product.name }}</router-link
+                    >{{ item.product.name }}</router-link
                   >
-                  <ul>
-                    <li class="ms-auto">
-                      <span>:المقاس</span>
-                      {{ orderInfo.size }}
+                  <ul class="p-0">
+                    <li>
+                      <span>Size: </span>
+                      {{ item.size }}
+                    </li>
+                    <li>
+                      <span>Color:</span>
+                      {{ item.color }}
                     </li>
                   </ul>
                 </div>
               </td>
+              <td>€{{ item.product.price }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>€{{ totalProductPrice(index) }}</td>
             </tr>
           </tbody>
         </table>
-        <div
-          class="pricing-detail-resume"
-          v-if="orderInfo && orderInfo.product"
-        >
-          <ul>
+        <div class="pricing-detail-resume" v-if="orderInfo">
+          <ul class="p-0">
             <li>
-              <div class="title">المجموع :</div>
-              <div class="text">MAD {{ totalPrice }}</div>
+              <div class="title">Total price:</div>
+              <div class="text">€{{ orderInfo.total }}</div>
             </li>
             <li>
-              <div class="title">الشحن (شحن مجاني) :</div>
-              <div class="text">MAD 0</div>
+              <div class="title">Shipping (Free shipping):</div>
+              <div class="text">€0</div>
             </li>
             <li>
-              <div class="title last-title">المبلغ الإجمالي :</div>
-              <div class="text last-text">MAD {{ totalPrice }}</div>
+              <div class="title last-title">Total amount:</div>
+              <div class="text last-text">€{{ orderInfo.total }}</div>
             </li>
           </ul>
         </div>
@@ -95,28 +96,36 @@ import { useProducStore } from "@/stores/product";
 const productStore = useProducStore();
 
 const orderInfo = ref();
+const productInfo = ref();
 
-const totalPrice = computed(() => {
-  if (orderInfo.value && orderInfo.value.product) {
-    return orderInfo.value.product.price * orderInfo.value.quantity;
-  } else return "";
-});
+const totalProductPrice = (index) => {
+  const productInfo = orderInfo.value.productList[index];
+  return productInfo.quantity * productInfo.product.price;
+};
 
-const imageUrl = computed(() => {
-  const image = orderInfo.value.product.images.find(
-    (elem) => elem.color === orderInfo.value.color
+const imageUrl = (index) => {
+  const productInfo = orderInfo.value.productList[index];
+  const image = productInfo.product.images.find(
+    (elem) => elem.color === productInfo.color
   );
-  image.file = `http://localhost:8000/Images/${image.file}`;
-  return image.file;
-});
+  const imageUrl = `http://localhost:8000/Images/${image.file}`;
+  return imageUrl;
+};
 
 onMounted(() => {
   const route = useRoute();
   const orderId = route.query.id;
+  console.log("orderId", orderId);
   productStore.fetchOrderById(orderId).then((res) => {
     orderInfo.value = res;
     console.log("orderInfo", orderInfo.value);
   });
+  // .then(() => {
+  //   productStore.fetchProductById(orderInfo.value.productId).then((res) => {
+  //     productInfo.value = res;
+  //     console.log("productInfo", productInfo.value);
+  //   });
+  // });
 });
 </script>
 <style>
@@ -135,15 +144,19 @@ onMounted(() => {
   margin-bottom: 2.5rem;
 }
 .checkout-section-content .actions button {
-  background-color: #1a1a1a;
-  border-radius: 4px;
+  border: none;
   transition: background-color 0.5s, border 0.5s;
 }
 .checkout-section-content .actions button a {
+  background-color: #1a1a1a;
+  border: #1a1a1a 1px solid;
   color: #fff;
   text-decoration: none;
+  border-radius: 4px;
+  padding: 12px;
+  transition: background-color 0.5s, border 0.5s;
 }
-.checkout-section-content .actions button:hover {
+.checkout-section-content .actions button a:hover {
   background-color: #bf8c4e;
   border: #bf8c4e 1px solid;
 }
@@ -188,34 +201,27 @@ onMounted(() => {
 .checkout-section-content .table thead th {
   color: #a7a7a7;
   font-size: 14px;
-  text-align: right;
   padding: 15px;
 }
 .checkout-section-content .table td {
   font-size: 14px;
   padding: 10px 15px;
-  text-align: end;
 }
 .checkout-section-content .table .product-detail {
   color: #a7a7a7;
   display: flex;
-  flex-direction: row-reverse;
   gap: 12px;
 }
 .checkout-section-content .table .product-detail img {
   width: 73px;
-  height: 70px;
+  height: 85px;
   border-radius: 4px;
   cursor: pointer;
 }
 .checkout-section-content .table .product-detail li {
   display: flex;
-  flex-direction: row-reverse;
   gap: 10px;
 }
-/* .checkout-section-content .table .product-detail li span {
-  direction: rtl;
-} */
 .checkout-section-content .table .product-detail .title {
   color: #1a1a1a;
   font-weight: 600;
@@ -231,24 +237,27 @@ onMounted(() => {
   padding: 15px;
   font-size: 14px;
 }
+.checkout-section-content .pricing-detail-resume ul {
+  display: flex;
+  align-items: end;
+}
 .checkout-section-content .pricing-detail-resume ul li {
   display: flex;
-  flex-direction: row-reverse;
-  /* gap: 3rem; */
-  margin-right: auto;
+  gap: 2rem;
   margin-bottom: 10px;
 }
 .checkout-section-content .pricing-detail-resume ul li .title {
   display: flex;
-  direction: rtl;
-  width: 150px;
+  width: 200px;
   color: #a7a7a7;
+  font-size: 1rem;
 }
 .checkout-section-content .pricing-detail-resume ul li .text {
-  width: 150px;
+  width: 50px;
 }
 .checkout-section-content .pricing-detail-resume ul li .last-title {
   color: #1a1a1a;
+  font-weight: bold;
 }
 .checkout-section-content .pricing-detail-resume ul li .last-text {
   color: #1a1a1a;

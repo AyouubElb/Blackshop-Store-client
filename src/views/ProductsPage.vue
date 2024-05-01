@@ -1,20 +1,20 @@
 <template>
   <div class="products-section-container">
     <div class="products-header">
-      <div class="products-filters">
+      <h2 class="title">{{ productStore.selectedCategory.name }}</h2>
+      <div class="products-filters ms-auto">
         <div
           class="dropdown"
           data-bs-toggle="dropdown"
           aria-expanded="false"
           @click="openDropdown = !openDropdown"
         >
-          <h3>الترتيب حسب :</h3>
           <div class="dropdown-select">
             <i class="bi bi-chevron-down" v-if="!openDropdown"></i>
             <i class="bi bi-chevron-up" v-if="openDropdown"></i>
             {{ selectedItem }}
           </div>
-
+          <h3>Order by</h3>
           <ul class="dropdown-menu">
             <li
               v-for="(item, index) in dropdownList"
@@ -28,7 +28,6 @@
           </ul>
         </div>
       </div>
-      <h2 class="title">{{ productStore.selectedCategory.name }}</h2>
     </div>
     <div class="products-section-content">
       <ProductsHolder :products="productList" :displayOption="displayOption" />
@@ -39,19 +38,19 @@
 <script setup>
 import ProductsHolder from "@/components/ProductsHolder.vue";
 import Footer from "@/components/Footer.vue";
-import { reactive, onMounted, ref } from "vue";
+import { reactive, onMounted, ref, watchEffect } from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
 
 const productList = reactive([]);
 const dropdownList = reactive([
-  "مقترح",
-  "وصل حديثا",
-  "السعر (تنازلي)",
-  "السعر (تصاعدي)",
+  "Proposed",
+  "Newest",
+  "Price (descending)",
+  "Price (ascending)",
 ]);
-const selectedItem = ref("مقترح");
+const selectedItem = ref("Proposed");
 const openDropdown = ref(false);
 const displayOption = ref(4);
 
@@ -77,7 +76,10 @@ const editFilter = (index) => {
       order = "asc";
       break;
   }
-  productStore.fetchAllProducts(sortBy, order).then((res) => {
+  const filters = {
+    categories: productStore.selectedCategory._id,
+  };
+  productStore.searchProducts(sortBy, order, filters).then((res) => {
     const data = res.map((value) => {
       value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
       return value;
@@ -86,11 +88,14 @@ const editFilter = (index) => {
   });
 };
 
-onMounted(() => {
+watchEffect(() => {
+  console.log("selectedCategory", productStore.selectedCategory._id);
+  let sortBy = "";
+  let order = "";
   const filters = {
     categories: productStore.selectedCategory._id,
   };
-  productStore.searchProducts(filters).then((res) => {
+  productStore.searchProducts(sortBy, order, filters).then((res) => {
     const data = res.map((value) => {
       value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
       return value;
@@ -109,16 +114,13 @@ onMounted(() => {
   padding: 1.5rem;
 }
 .products-header .title {
-  font-family: "Rubik", sans-serif;
   font-size: 2rem;
   font-weight: 600;
-  margin-left: auto;
 }
 .products-filters {
   display: flex;
   flex-direction: row-reverse;
   gap: 2.5rem;
-  margin-right: auto;
   margin-top: auto;
 }
 .products-filters h3 {

@@ -2,7 +2,7 @@
   <div class="info-section-container">
     <div class="info-section-header d-flex flex-column">
       <div class="header-title d-flex">
-        <h1 class="mx-auto">خدمة العملاء</h1>
+        <h1 class="mx-auto">SUPPORT HUB</h1>
       </div>
       <!-- <div class="select-info-dropdown">
         <div class="dropdown">
@@ -23,7 +23,7 @@
         </div>
       </div> -->
     </div>
-    <div class="info-section-content d-flex flex-row-reverse gap-4">
+    <div class="info-section-content d-flex gap-4">
       <div class="info-content-sider d-flex flex-column" v-if="pageInfo">
         <div
           class="sider-item py-4 px-2"
@@ -111,10 +111,10 @@ const editPage = (index) => {
   font-weight: normal;
 }
 .info-section-content .info-content-desc {
-  text-align: end;
-  padding: 3rem 6rem;
+  padding: 3rem 4rem;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0.2rem 1.3rem 0px;
   max-height: 117vh;
+  height: fit-content;
   overflow: auto;
   font-family: roboto !important;
 }
