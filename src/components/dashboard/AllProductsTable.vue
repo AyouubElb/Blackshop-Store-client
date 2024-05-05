@@ -103,7 +103,7 @@ onMounted(() => {
   let order = "";
   productStore.fetchAllProducts(sortBy, order).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
       const date = new Date(value.createdAt);
 
       value.createdAt = `${date.getFullYear()}-${(date.getMonth() + 1)

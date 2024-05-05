@@ -94,7 +94,7 @@ const categoryList = reactive([]);
 onMounted(() => {
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
-      value.image = `http://localhost:8000/Images/${value.image}`;
+      value.image = `https://blackshop-store-api.onrender.com/Images/${value.image}`;
       const date = new Date(value.createdAt);
 
       value.createdAt = `${date.getFullYear()}-${(date.getMonth() + 1)

@@ -108,7 +108,7 @@ const imageUrl = (index) => {
   const image = productInfo.product.images.find(
     (elem) => elem.color === productInfo.color
   );
-  const imageUrl = `http://localhost:8000/Images/${image.file}`;
+  const imageUrl = `https://blackshop-store-api.onrender.com/Images/${image.file}`;
   return imageUrl;
 };
 

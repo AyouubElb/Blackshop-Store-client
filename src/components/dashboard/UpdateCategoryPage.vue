@@ -62,7 +62,7 @@ onMounted(() => {
     categoryName.value = res.name;
     categoryDesc.value = res.description;
     categoryImage.value = res.image;
-    imageUrl.value = `http://localhost:8000/Images/${res.image}`;
+    imageUrl.value = `https://blackshop-store-api.onrender.com/Images/${res.image}`;
   });
 });
 

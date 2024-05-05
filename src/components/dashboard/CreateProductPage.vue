@@ -360,7 +360,7 @@ onMounted(() => {
   let order = "";
   productStore.fetchAllProducts(sortBy, order).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
       return value;
     });
     productList.splice(0, productList.length, ...data);
@@ -369,7 +369,7 @@ onMounted(() => {
   // fetch categories
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
-      value.image = `http://localhost:8000/Images/${value.image}`;
+      value.image = `https://blackshop-store-api.onrender.com/Images/${value.image}`;
       return value;
     });
     categoryList.splice(0, categoryList.length, ...data);

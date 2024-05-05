@@ -29,7 +29,7 @@ const productList = reactive([]);
 onMounted(() => {
   productStore.fetchAllProducts("createdAt", "desc", 4).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
       return value;
     });
     NewestProducts.splice(0, NewestProducts.length, ...data);
