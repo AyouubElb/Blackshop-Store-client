@@ -94,7 +94,7 @@ const editPage = (index) => {
 }
 .info-section-content .info-content-sider .sider-item {
   min-width: 240px;
-  border-top: 0.1rem solid rgb(235, 235, 235);
+  border-bottom: 0.1rem solid rgb(235, 235, 235);
   cursor: pointer;
 }
 .info-section-content .info-content-sider .active-sider-item {

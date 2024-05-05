@@ -10,8 +10,8 @@
         </div>
       </h1>
     </div>
-    <div class="hero-image-decor"></div>
     <div class="hero-image">
+      <div class="hero-image-decor"></div>
       <img src="../../assets/images/hero-image.jpg" alt="hero image" />
     </div>
   </div>
@@ -21,14 +21,26 @@
 .hero-container {
   position: relative;
   display: flex;
+  align-items: center;
   height: 100vh;
   margin-bottom: 5rem;
 }
 .hero-text-container {
-  position: absolute;
+  /* position: absolute;
   top: 25%;
-  left: 10%;
+  left: 10%; */
+  margin-left: 5rem;
   width: 650px;
+  z-index: none; /* Initially set to none */
+  animation: changeZIndex 1s forwards 1s; /* Apply animation to change z-index after 1 second */
+}
+@keyframes changeZIndex {
+  0% {
+    z-index: none;
+  }
+  100% {
+    z-index: 100;
+  }
 }
 .hero-text {
   font-size: 90px;
@@ -64,9 +76,8 @@
   border-radius: 4px;
   position: absolute;
   top: auto;
-  bottom: -90px;
-  left: auto;
-  right: 38%;
+  bottom: -70px;
+  left: -70px;
   z-index: 100;
   animation: decorTransition 1.5s;
 }
@@ -93,13 +104,55 @@
   object-position: 100% 50%;
   animation: changeWidth 1s;
 }
-
 @keyframes changeWidth {
   from {
     width: 1400px;
   }
   to {
     width: 600px;
+  }
+}
+@media screen and (max-device-width: 992px) {
+  .hero-image img {
+    width: 400px;
+    object-position: 85% 50%;
+    animation: changetabletWidth 1s;
+  }
+
+  @keyframes changetabletWidth {
+    from {
+      width: 992px;
+    }
+    to {
+      width: 400px;
+    }
+  }
+}
+@media screen and (max-device-width: 768px) {
+  .hero-container {
+    height: 50vh;
+    align-items: end;
+  }
+  .hero-text-container {
+    width: 80%;
+    margin-left: 3rem;
+  }
+  .hero-text {
+    font-size: 73px;
+  }
+  .hero-image img {
+    display: none;
+  }
+  .hero-image-decor {
+    display: none;
+  }
+}
+@media screen and (max-device-width: 480px) {
+  .hero-container {
+    height: 35vh;
+  }
+  .hero-text {
+    font-size: 53px;
   }
 }
 </style>

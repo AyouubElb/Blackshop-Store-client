@@ -80,9 +80,10 @@
 }
 
 /* Media queries */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 992px) {
   .address-section {
     flex-direction: column;
+    justify-content: start;
     gap: 1rem;
     padding: 6rem 2rem;
   }
@@ -96,6 +97,16 @@
   .section-content button {
     font-size: 14px;
     padding: 14px 28px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .section-text {
+    font-size: 2.125rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .section-text {
+    font-size: 1.75rem;
   }
 }
 </style>

@@ -2,6 +2,7 @@
   <div class="products-container product-grid">
     <template v-for="(product, index) in products" :key="index">
       <div class="product-card">
+        <!-- <i class="bi bi-chevron-left"></i> -->
         <router-link
           class="product-image"
           :to="{
@@ -14,6 +15,7 @@
         >
           <img :src="product.images[0].file" :alt="product.name" />
         </router-link>
+        <!-- <i class="bi bi-chevron-right"></i> -->
         <div class="product-card-detail-container">
           <div class="product-price-container">
             <router-link
@@ -29,7 +31,7 @@
             >
             <div class="product-price"><span>€</span>{{ product.price }}</div>
           </div>
-          <div
+          <!-- <div
             class="add-to-cart-icon"
             @click="addToCart(product)"
             data-bs-toggle="offcanvas"
@@ -38,7 +40,7 @@
           >
             <i class="bi bi-cart2"></i>
             <i class="bi bi-plus"></i>
-          </div>
+          </div> -->
         </div>
       </div>
     </template>
@@ -78,13 +80,19 @@ const addToCart = (product) => {
 .product-card {
   position: relative;
 }
+/* .product-card i {
+  position: absolute;
+  top: 40%;
+  font-size: 1.5rem;
+}
+.product-card .bi-chevron-right {
+  right: 0;
+} */
 .product-image {
   cursor: pointer;
 }
 .product-image img {
   width: 100%;
-  height: 360px;
-  min-height: 360px;
   border-radius: 4px;
 }
 .product-card-detail-container {
@@ -137,6 +145,16 @@ const addToCart = (product) => {
 }
 
 /* Media queries */
+@media only screen and (max-width: 992px) {
+  /* .products-container {
+    padding: 0;
+  } */
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 20px;
+    grid-row-gap: 30px;
+  }
+}
 @media only screen and (max-width: 768px) {
   .products-container {
     padding: 0;
@@ -144,7 +162,14 @@ const addToCart = (product) => {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
     grid-column-gap: 20px;
-    grid-row-gap: 115px;
+    grid-row-gap: 30px;
+  }
+}
+@media screen and (max-device-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 30px;
   }
 }
 </style>

@@ -48,17 +48,17 @@ onMounted(() => {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
+  margin: 0;
 }
 .title-holder {
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: 82%;
   margin-inline: auto;
 }
 .left-alighted-text {
   /* animation: scroll-text-left linear;
   animation-timeline: view(); */
-  margin-bottom: 2rem;
 }
 
 @keyframes scroll-text-left {
@@ -103,12 +103,17 @@ onMounted(() => {
   color: #bf8c4e;
 }
 .view-all-link .arrow-icon {
-  transform: rotate(45deg);
+  transform: rotate(-45deg);
   font-size: 2rem;
   color: #bf8c4e;
 }
 
 /* Media queries */
+@media only screen and (max-width: 992px) {
+  .newest-product-container {
+    padding: 50px 20px;
+  }
+}
 @media only screen and (max-width: 768px) {
   .newest-product-container {
     padding: 50px 20px;

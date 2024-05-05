@@ -18,6 +18,16 @@
         </router-link>
       </li>
     </ul>
+    <CartSidebar />
+    <div
+      class="sidebar-button ms-4 my-auto"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#menuSidebar"
+      aria-controls="offcanvasScrolling"
+      v-if="screenWidth <= 768"
+    >
+      <i class="bi bi-list"></i>
+    </div>
     <div class="search-button my-auto me-4">
       <i class="bi bi-search"></i>
     </div>
@@ -30,16 +40,6 @@
     >
       <i class="bi bi-cart2"></i>
       <div class="cart-quantity">{{ cartQuantity }}</div>
-    </div>
-    <CartSidebar />
-    <div
-      class="sidebar-button ms-4 my-auto"
-      data-bs-toggle="offcanvas"
-      data-bs-target="#menuSidebar"
-      aria-controls="offcanvasScrolling"
-      v-if="screenWidth <= 768"
-    >
-      <i class="bi bi-list"></i>
     </div>
     <div
       class="offcanvas offcanvas-end menu-sidebar"
@@ -244,6 +244,9 @@ onMounted(() => {
   .nav-bar-categories {
     flex-direction: column;
     gap: 1rem;
+  }
+  .search-button {
+    margin-left: auto;
   }
 }
 </style>
