@@ -52,11 +52,7 @@
             <div class="subtotal">Total:</div>
             <div class="card-product-pice"><span>€</span>{{ totalPrice }}</div>
           </div>
-          <button
-            class="add-to-card-button button"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          >
+          <button class="add-to-card-button button">
             <router-link to="/client-info">
               <i class="bi bi-cart2 me-2"></i>
               Proceed To Checkout
