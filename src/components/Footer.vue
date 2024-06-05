@@ -86,14 +86,14 @@
   </div>
 </template>
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
 const productStore = useProducStore();
 
 const categoryList = reactive([]);
 const menuList = reactive([]);
 
-onMounted(() => {
+onBeforeMount(() => {
   // fetch categories
   productStore.fetchCategories().then((res) => {
     categoryList.splice(0, categoryList.length, ...res);

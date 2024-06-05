@@ -96,7 +96,14 @@
 </template>
 <script setup>
 import CartSidebar from "@/components/CartSidebar.vue";
-import { reactive, onMounted, onUnmounted, computed, ref } from "vue";
+import {
+  reactive,
+  onMounted,
+  onBeforeMount,
+  onUnmounted,
+  computed,
+  ref,
+} from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
@@ -131,7 +138,7 @@ const removeFromCart = (id) => {
   // }
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   window.addEventListener("resize", handleResize);
 
   productStore.fetchCategories().then((res) => {

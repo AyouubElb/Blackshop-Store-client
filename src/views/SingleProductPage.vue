@@ -123,7 +123,7 @@ import Footer from "@/components/Footer.vue";
 import ProductsHolder from "@/components/ProductsHolder.vue";
 import checkoutModal from "@/components/checkoutModal.vue";
 import toastr from "toastr";
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
@@ -166,7 +166,7 @@ const addToCart = () => {
   }
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   const route = useRoute();
   const productId = route.query.id;
 

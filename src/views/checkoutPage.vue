@@ -89,7 +89,7 @@
 </template>
 <script setup>
 import Footer from "../components/Footer.vue";
-import { reactive, ref, onMounted, computed } from "vue";
+import { reactive, ref, onBeforeMount, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useProducStore } from "@/stores/product";
 
@@ -112,7 +112,7 @@ const imageUrl = (index) => {
   return imageUrl;
 };
 
-onMounted(() => {
+onBeforeMount(() => {
   const route = useRoute();
   const orderId = route.query.id;
   console.log("orderId", orderId);

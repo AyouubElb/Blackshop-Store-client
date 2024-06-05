@@ -14,7 +14,7 @@
 </template>
 <script setup>
 import Footer from "../components/Footer.vue";
-import { reactive, ref, onMounted } from "vue";
+import { reactive, ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import { useProducStore } from "@/stores/product";
 
@@ -22,7 +22,7 @@ const productStore = useProducStore();
 
 const pageInfo = ref();
 
-onMounted(() => {
+onBeforeMount(() => {
   const route = useRoute();
   const pageId = route.query.id;
   productStore.fetchPageById(pageId).then((res) => {

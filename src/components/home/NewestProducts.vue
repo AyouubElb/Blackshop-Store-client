@@ -19,14 +19,14 @@
 </template>
 <script setup>
 import ProductsHolder from "@/components/ProductsHolder.vue";
-import { reactive, onMounted } from "vue";
+import { reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
 const NewestProducts = reactive([]);
 const productList = reactive([]);
 
-onMounted(() => {
+onBeforeMount(() => {
   productStore.fetchAllProducts("createdAt", "desc", 4).then((res) => {
     const data = res.map((value) => {
       value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;

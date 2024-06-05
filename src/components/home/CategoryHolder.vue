@@ -22,14 +22,14 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
 
 const categoryList = reactive([]);
 
-onMounted(() => {
+onBeforeMount(() => {
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
       value.image = `https://blackshop-store-api.onrender.com/Images/${value.image}`;
