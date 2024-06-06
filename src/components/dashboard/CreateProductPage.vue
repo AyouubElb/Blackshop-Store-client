@@ -408,7 +408,6 @@ const saveImage = (color) => {
   } else {
     console.error("Error: imageList[selectedImageIndex] is undefined");
   }
-  console.log("imageList", imageList);
 };
 
 const thumbnailUrl = (color) => {

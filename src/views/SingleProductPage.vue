@@ -186,7 +186,7 @@ onBeforeMount(() => {
 
   const newImageUrl = (images) => {
     const newImages = images.map((image) => {
-      image.file = `https://blackshop-store-api.onrender.com/Images/${image.file}`;
+      image.file = `http://localhost:8000/Images/${image.file}`;
       return image;
     });
     return newImages;
