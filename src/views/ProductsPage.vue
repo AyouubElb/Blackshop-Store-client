@@ -81,7 +81,7 @@ const editFilter = (index) => {
   };
   productStore.searchProducts(sortBy, order, filters).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
       return value;
     });
     productList.splice(0, productList.length, ...data);
@@ -97,7 +97,7 @@ watchEffect(() => {
   };
   productStore.searchProducts(sortBy, order, filters).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `http://localhost:8000/Images/${value.images[0].file}`;
+      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
       return value;
     });
     productList.splice(0, productList.length, ...data);
