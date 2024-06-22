@@ -36,6 +36,7 @@ onBeforeMount(() => {
       return value;
     });
     categoryList.splice(0, categoryList.length, ...data);
+    console.log("categoryList", categoryList);
   });
 });
 
@@ -153,6 +154,7 @@ const categoryClicked = (category) => {
 @media only screen and (max-width: 768px) {
   .category-container {
     flex-direction: column;
+    padding: 50px 24px;
   }
   .category-image-container img {
     height: 150px;

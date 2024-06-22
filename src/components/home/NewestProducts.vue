@@ -111,13 +111,10 @@ onBeforeMount(() => {
 /* Media queries */
 @media only screen and (max-width: 992px) {
   .newest-product-container {
-    padding: 50px 20px;
+    padding: 50px 24px;
   }
 }
 @media only screen and (max-width: 768px) {
-  .newest-product-container {
-    padding: 50px 20px;
-  }
   .title-holder h1 {
     font-size: 50px;
   }

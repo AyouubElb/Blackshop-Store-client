@@ -26,9 +26,6 @@
   margin-bottom: 5rem;
 }
 .hero-text-container {
-  /* position: absolute;
-  top: 25%;
-  left: 10%; */
   margin-left: 5rem;
   width: 650px;
   z-index: none; /* Initially set to none */
@@ -46,8 +43,6 @@
   font-size: 90px;
   font-weight: 700;
   line-height: 1;
-  /* position: absolute;
-  z-index: 5; */
 }
 .hero-text span {
   display: inline-block;
@@ -135,7 +130,7 @@
   }
   .hero-text-container {
     width: 80%;
-    margin-left: 3rem;
+    margin-left: 2rem;
   }
   .hero-text {
     font-size: 73px;
@@ -149,10 +144,10 @@
 }
 @media screen and (max-device-width: 480px) {
   .hero-container {
-    height: 35vh;
+    height: 47vh;
   }
   .hero-text {
-    font-size: 53px;
+    font-size: 45px;
   }
 }
 </style>
