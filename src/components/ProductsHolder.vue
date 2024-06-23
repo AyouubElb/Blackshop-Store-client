@@ -13,7 +13,11 @@
             query: { id: product._id },
           }"
         >
-          <img :src="product.images[0].file" :alt="product.name" />
+          <img
+            :src="product.images[0].file"
+            :alt="product.name"
+            loading="lazy"
+          />
         </router-link>
         <!-- <i class="bi bi-chevron-right"></i> -->
         <div class="product-card-detail-container">
@@ -94,6 +98,7 @@ const addToCart = (product) => {
 .product-image img {
   width: 100%;
   border-radius: 4px;
+  max-height: 410px;
 }
 .product-card-detail-container {
   display: flex;

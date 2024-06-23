@@ -39,7 +39,11 @@
                 </div>
               </th>
               <td>
-                <img :src="product.images[0].file" :alt="product.name" />
+                <img
+                  :src="product.images[0].file"
+                  :alt="product.name"
+                  loading="lazy"
+                />
               </td>
               <td>{{ product.name }}</td>
               <td>{{ product.price }}</td>

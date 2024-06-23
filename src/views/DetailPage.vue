@@ -2,7 +2,7 @@
   <div class="shipping-section-container">
     <div class="shipping-section-header">
       <div class="background-image-holder">
-        <img src="../assets/images/shipping-image.webp" alt="" />
+        <img src="../assets/images/shipping-image.webp" loading="lazy" alt="" />
       </div>
       <h1 class="header-title" v-if="pageInfo">{{ pageInfo.name }}</h1>
     </div>

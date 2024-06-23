@@ -2,7 +2,7 @@
   <div class="product-container" v-if="productInfo">
     <div class="product-section-container">
       <div class="product-hero" data-aos="fade-up" data-aos-duration="500">
-        <img :src="mainImage" :alt="productInfo.name" />
+        <img :src="mainImage" :alt="productInfo.name" loading="lazy" />
       </div>
       <div
         class="product-detail-container"
@@ -22,7 +22,7 @@
               :key="index"
               @click="selectColor(index)"
             >
-              <img :src="image.file" :alt="image.color" />
+              <img :src="image.file" :alt="image.color" loading="lazy" />
             </div>
           </div>
         </div>

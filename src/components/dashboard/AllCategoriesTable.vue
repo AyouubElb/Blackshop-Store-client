@@ -37,7 +37,11 @@
                 </div>
               </th>
               <td>
-                <img :src="category.image" :alt="category.name" />
+                <img
+                  :src="category.image"
+                  :alt="category.name"
+                  loading="lazy"
+                />
               </td>
               <td>{{ category.name }}</td>
               <td>

@@ -25,7 +25,7 @@
             </div>
           </form>
           <div class="image-actions" @click="uploadImage" v-if="categoryImage">
-            <img :src="imageUrl" alt="" />
+            <img :src="imageUrl" alt="" loading="lazy" />
           </div>
           <div class="uploader" @click="uploadImage" v-else>
             <i class="bi bi-cloud-upload"></i>

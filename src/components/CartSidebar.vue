@@ -24,7 +24,7 @@
           v-for="(item, index) in productStore.cartList"
           :key="index"
         >
-          <img :src="item.image" alt="" />
+          <img :src="item.image" alt="" loading="lazy" />
           <div class="product-details-holder">
             <div class="product-name">{{ item.name }}</div>
             <div class="price-text"><span>€</span>{{ item.price }}</div>

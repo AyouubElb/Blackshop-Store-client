@@ -12,7 +12,11 @@
     </div>
     <div class="hero-image">
       <div class="hero-image-decor"></div>
-      <img src="../../assets/images/hero-image.jpg" alt="hero image" />
+      <img
+        src="../../assets/images/hero-image.jpg"
+        alt="hero image"
+        loading="lazy"
+      />
     </div>
   </div>
 </template>

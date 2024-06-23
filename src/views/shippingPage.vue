@@ -2,7 +2,7 @@
   <div class="shipping-section-container">
     <div class="shipping-section-header">
       <div class="background-image-holder">
-        <img src="../assets/images/shipping-image.webp" alt="" />
+        <img src="../assets/images/shipping-image.webp" alt="" loading="lazy" />
       </div>
       <h1 class="header-title">الشحن والتسليم</h1>
     </div>

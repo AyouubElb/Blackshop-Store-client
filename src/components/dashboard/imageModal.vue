@@ -27,7 +27,7 @@
               :key="index"
               @click="selectImage(index)"
             >
-              <img :src="image.url" alt="" />
+              <img :src="image.url" loading="lazy" alt="" />
             </div>
           </div>
         </div>

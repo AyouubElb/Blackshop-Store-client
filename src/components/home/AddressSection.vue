@@ -2,10 +2,10 @@
   <div class="address-section">
     <div class="sale-badge-container">
       <div class="sale-circle">
-        <img src="../../assets/icons/cercleIcon.svg" alt="" />
+        <img src="../../assets/icons/cercleIcon.svg" loading="lazy" alt="" />
       </div>
       <div class="b-icon">
-        <img src="../../assets/icons/b2-icon.svg" alt="" />
+        <img src="../../assets/icons/b2-icon.svg" loading="lazy" alt="" />
       </div>
     </div>
     <div class="section-content">

@@ -48,7 +48,7 @@
           <div class="product-images">
             <ul v-if="imageList">
               <li v-for="(image, index) in imageList" :key="index">
-                <img :src="image.url" alt="" />
+                <img :src="image.url" alt="" loading="lazy" />
                 <div class="image-mouse-over">
                   <i class="bi bi-trash"></i>
                 </div>
@@ -106,6 +106,7 @@
                   <img
                     :src="thumbnailUrl(color)"
                     :alt="color"
+                    loading="lazy"
                     v-if="thumbnailUrl(color)"
                   />
                   <i class="bi bi-camera-fill" v-else></i>
@@ -145,7 +146,7 @@
                             :key="index"
                             @click="selectedImageIndex = index"
                           >
-                            <img :src="image.url" alt="" />
+                            <img :src="image.url" loading="lazy" alt="" />
                           </div>
                         </div>
                       </div>
@@ -227,7 +228,11 @@
                     @click="addRelativeProduct(index)"
                   >
                     <div class="item-thumb">
-                      <img :src="product.images[0].file" :alt="product.name" />
+                      <img
+                        :src="product.images[0].file"
+                        :alt="product.name"
+                        loading="lazy"
+                      />
                     </div>
                     <span>{{ product.name }}</span>
                   </li>
@@ -246,6 +251,7 @@
                     <img
                       :src="relProduct.images[0].file"
                       :alt="relProduct.name"
+                      loading="lazy"
                     />
                   </div>
                   <span>{{ relProduct.name }}</span>
@@ -287,7 +293,11 @@
                     @click="addCategory(index)"
                   >
                     <div class="item-thumb">
-                      <img :src="category.image" :alt="category.name" />
+                      <img
+                        :src="category.image"
+                        :alt="category.name"
+                        loading="lazy"
+                      />
                     </div>
                     <span>{{ category.name }}</span>
                   </li>
@@ -303,7 +313,11 @@
                   :key="index"
                 >
                   <div class="item-thumb">
-                    <img :src="category.image" :alt="category.name" />
+                    <img
+                      :src="category.image"
+                      :alt="category.name"
+                      loading="lazy"
+                    />
                   </div>
                   <span>{{ category.name }}</span>
                   <div

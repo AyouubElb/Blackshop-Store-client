@@ -3,7 +3,7 @@
     <div class="checkout-section-content">
       <div class="order-message mb-4">
         <div class="mb-3">
-          <img src="../assets/icons/thanks-icon.svg" alt="" />
+          <img src="../assets/icons/thanks-icon.svg" alt="" loading="lazy" />
         </div>
         <h1 class="heading-primary">Thank you for your trust</h1>
         <div class="actions">
@@ -35,7 +35,11 @@
           <tbody>
             <tr v-for="(item, index) in orderInfo.productList" :key="index">
               <td class="product-detail">
-                <img :src="imageUrl(index)" :alt="item.product.name" />
+                <img
+                  :src="imageUrl(index)"
+                  :alt="item.product.name"
+                  loading="lazy"
+                />
                 <div class="detail-text">
                   <router-link
                     :to="{

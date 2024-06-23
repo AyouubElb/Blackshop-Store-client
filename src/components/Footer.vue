@@ -15,7 +15,7 @@
       <div class="overlay-image">
         <div class="overlay"></div>
         <div class="image">
-          <img src="../assets/images/footer-image.jpg" alt="" />
+          <img src="../assets/images/footer-image.jpg" loading="lazy" alt="" />
         </div>
       </div>
       <div
@@ -71,13 +71,13 @@
           <div class="footer-text-title"></div>
           <ul class="footer-link-block p-0">
             <li class="link">
-              <img src="../assets/icons/facebook.svg" alt="" />
+              <img src="../assets/icons/facebook.svg" loading="lazy" alt="" />
             </li>
             <li class="link">
-              <img src="../assets/icons/instagram.svg" alt="" />
+              <img src="../assets/icons/instagram.svg" loading="lazy" alt="" />
             </li>
             <li class="link">
-              <img src="../assets/icons/twitterx.svg" alt="" />
+              <img src="../assets/icons/twitterx.svg" loading="lazy" alt="" />
             </li>
           </ul>
         </div>

@@ -6,7 +6,11 @@
       </li>
       <li class="products-submenu-container">
         <span>
-          <img src="../../assets/icons/product-svgrepo-com.svg" alt="" />
+          <img
+            src="../../assets/icons/product-svgrepo-com.svg"
+            loading="lazy"
+            alt=""
+          />
           Orders
         </span>
         <ul class="sub-menu">
@@ -22,7 +26,7 @@
       </li>
       <li class="products-submenu-container">
         <span>
-          <img src="../../assets/icons/sales.svg" alt="" />
+          <img src="../../assets/icons/sales.svg" loading="lazy" alt="" />
           Products
         </span>
         <ul class="sub-menu">

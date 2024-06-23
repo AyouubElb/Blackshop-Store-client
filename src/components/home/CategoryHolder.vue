@@ -9,7 +9,8 @@
     >
       <div class="category-image-container">
         <div class="category-overlay"></div>
-        <img :src="category.image" :alt="category.name" />
+        <!-- <img :src="category.image" :alt="category.name" loading="lazy" /> -->
+        <AdvancedImage :cldImg="category.image" loading="lazy" />
       </div>
       <div class="text-holder">
         <div class="category-name">
@@ -24,17 +25,33 @@
 <script setup>
 import { ref, reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
+import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 const productStore = useProducStore();
 
 const categoryList = reactive([]);
 
 onBeforeMount(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
+
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
-      value.image = `https://blackshop-store-api.onrender.com/Images/${value.image}`;
+      value.image = cld
+        .image(value.cloudinary_id)
+        .format("auto")
+        .quality("auto");
+      // .resize({ width: 282 })
+      // .toUrl({ loading: "lazy" });
+
       return value;
     });
+
     categoryList.splice(0, categoryList.length, ...data);
     console.log("categoryList", categoryList);
   });

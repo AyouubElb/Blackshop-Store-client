@@ -2,7 +2,11 @@
   <nav class="nav-bar">
     <div class="nav-bar-brand">
       <router-link to="/">
-        <img src="../assets/icons/blackshop.png" alt="" />
+        <img
+          src="../assets/icons/blackshop.png"
+          alt="blackshop Icon"
+          loading="lazy"
+        />
       </router-link>
     </div>
     <ul class="nav-bar-categories mx-auto my-auto" v-if="screenWidth > 768">
@@ -52,7 +56,7 @@
     >
       <div class="offcanvas-header p-0">
         <router-link to="/" class="side-bar-brand mx-auto">
-          <img src="../assets/icons/blackshop.png" alt="" />
+          <img src="../assets/icons/blackshop.png" loading="lazy" alt="" />
         </router-link>
         <button
           type="button"
