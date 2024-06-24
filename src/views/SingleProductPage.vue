@@ -119,7 +119,6 @@
   </div>
 </template>
 <script setup>
-import Footer from "@/components/Footer.vue";
 import ProductsHolder from "@/components/ProductsHolder.vue";
 import checkoutModal from "@/components/checkoutModal.vue";
 import toastr from "toastr";
@@ -128,6 +127,9 @@ import { useRoute, useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import { useProducStore } from "@/stores/product";
+import { defineAsyncComponent } from "vue";
+
+const Footer = defineAsyncComponent(() => import("@/components/Footer.vue"));
 
 const productStore = useProducStore();
 const router = useRouter();

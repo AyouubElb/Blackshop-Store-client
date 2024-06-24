@@ -39,7 +39,6 @@ onBeforeMount(() => {
       cloudName: "dxupeynms",
     },
   });
-
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
       value.image = cld

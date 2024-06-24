@@ -36,10 +36,14 @@
   <Footer />
 </template>
 <script setup>
-import ProductsHolder from "@/components/ProductsHolder.vue";
-import Footer from "@/components/Footer.vue";
 import { reactive, onMounted, ref, watchEffect } from "vue";
 import { useProducStore } from "@/stores/product";
+import { defineAsyncComponent } from "vue";
+
+const ProductsHolder = defineAsyncComponent(() =>
+  import("@/components/ProductsHolder.vue")
+);
+const Footer = defineAsyncComponent(() => import("@/components/Footer.vue"));
 
 const productStore = useProducStore();
 

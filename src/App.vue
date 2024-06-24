@@ -4,6 +4,7 @@
 </template>
 <script setup>
 import Navbar from "@/components/Navbar.vue";
+import Spinner from "@/components/Spinner.vue";
 import { useRoute } from "vue-router";
 
 const showNavbar = () => {

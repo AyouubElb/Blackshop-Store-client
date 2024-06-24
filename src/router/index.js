@@ -16,12 +16,6 @@ const routes = [
         /* webpackChunkName: "SingleProductPage"*/ "@/views/SingleProductPage.vue"
       ),
   },
-  // {
-  //   path: "/pages/:path",
-  //   name: "DetailPage",
-  //   component: () =>
-  //     import(/* webpackChunkName: "ShippingPage"*/ "@/views/DetailPage"),
-  // },
   {
     path: "/pages/:path",
     name: "InfoPage",

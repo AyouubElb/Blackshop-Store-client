@@ -45,10 +45,12 @@
   </div>
 </template>
 <script setup>
-import Footer from "../components/Footer.vue";
 import { reactive, ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useProducStore } from "@/stores/product";
+import { defineAsyncComponent } from "vue";
+
+const Footer = defineAsyncComponent(() => import("@/components/Footer.vue"));
 
 const productStore = useProducStore();
 

@@ -5,7 +5,11 @@
   </div>
 </template>
 <script setup>
-import DashboardSidebar from "@/components/dashboard/DashboardSidebar.vue";
+import { defineAsyncComponent } from "vue";
+
+const DashboardSidebar = defineAsyncComponent(() =>
+  import("@/components/dashboard/DashboardSidebar.vue")
+);
 </script>
 <style>
 .dashboard-container {

@@ -99,7 +99,6 @@
   </nav>
 </template>
 <script setup>
-import CartSidebar from "@/components/CartSidebar.vue";
 import {
   reactive,
   onMounted,
@@ -109,6 +108,11 @@ import {
   ref,
 } from "vue";
 import { useProducStore } from "@/stores/product";
+import { defineAsyncComponent } from "vue";
+
+const CartSidebar = defineAsyncComponent(() =>
+  import("@/components/CartSidebar.vue")
+);
 
 const productStore = useProducStore();
 const categoryList = reactive([]);

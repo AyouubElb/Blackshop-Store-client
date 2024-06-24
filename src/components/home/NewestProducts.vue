@@ -18,9 +18,13 @@
   </div>
 </template>
 <script setup>
-import ProductsHolder from "@/components/ProductsHolder.vue";
 import { reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
+import { defineAsyncComponent } from "vue";
+
+const ProductsHolder = defineAsyncComponent(() =>
+  import("@/components/ProductsHolder.vue")
+);
 
 const productStore = useProducStore();
 const NewestProducts = reactive([]);
@@ -33,6 +37,7 @@ onBeforeMount(() => {
       return value;
     });
     NewestProducts.splice(0, NewestProducts.length, ...data);
+    console.log("NewestProducts", NewestProducts);
   });
 });
 </script>
