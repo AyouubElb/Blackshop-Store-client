@@ -293,8 +293,8 @@
                     @click="addCategory(index)"
                   >
                     <div class="item-thumb">
-                      <img
-                        :src="category.image"
+                      <AdvancedImage
+                        :cldImg="category.image"
                         :alt="category.name"
                         loading="lazy"
                       />
@@ -313,8 +313,8 @@
                   :key="index"
                 >
                   <div class="item-thumb">
-                    <img
-                      :src="category.image"
+                    <AdvancedImage
+                      :cldImg="category.image"
                       :alt="category.name"
                       loading="lazy"
                     />
@@ -346,6 +346,8 @@ import TextEditor from "@/components/dashboard/TextEditor.vue";
 import imageModal from "@/components/dashboard/imageModal.vue";
 import toastr from "toastr";
 import { ref, reactive, onMounted } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
@@ -369,6 +371,12 @@ const selectedCategories = reactive([]);
 const relativeProductList = reactive([]);
 
 onMounted(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
   // fetch products
   let sortBy = "";
   let order = "";
@@ -383,9 +391,13 @@ onMounted(() => {
   // fetch categories
   productStore.fetchCategories().then((res) => {
     const data = res.map((value) => {
-      value.image = `https://blackshop-store-api.onrender.com/Images/${value.image}`;
+      value.image = cld
+        .image(value.cloudinary_id)
+        .format("auto")
+        .quality("auto");
       return value;
     });
+
     categoryList.splice(0, categoryList.length, ...data);
   });
 });

@@ -2,7 +2,12 @@
   <div class="product-container" v-if="productInfo">
     <div class="product-section-container">
       <div class="product-hero" data-aos="fade-up" data-aos-duration="500">
-        <img :src="mainImage" :alt="productInfo.name" loading="lazy" />
+        <!-- <img :src="mainImage" :alt="productInfo.name" loading="lazy" /> -->
+        <AdvancedImage
+          :cldImg="mainImage"
+          :alt="productInfo.name"
+          loading="lazy"
+        />
       </div>
       <div
         class="product-detail-container"
@@ -22,7 +27,8 @@
               :key="index"
               @click="selectColor(index)"
             >
-              <img :src="image.file" :alt="image.color" loading="lazy" />
+              <!-- <img :src="image.file" :alt="image.color" loading="lazy" /> -->
+              <AdvancedImage :cldImg="image" alt="" loading="lazy" />
             </div>
           </div>
         </div>
@@ -122,6 +128,8 @@
 import ProductsHolder from "@/components/ProductsHolder.vue";
 import checkoutModal from "@/components/checkoutModal.vue";
 import toastr from "toastr";
+import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { reactive, ref, onBeforeMount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useVuelidate } from "@vuelidate/core";
@@ -172,11 +180,18 @@ onBeforeMount(() => {
   const route = useRoute();
   const productId = route.query.id;
 
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
+
   productStore.fetchProductById(productId).then((res) => {
     productInfo.value = res;
 
     productInfo.value.images = newImageUrl(productInfo.value.images);
-    mainImage.value = productInfo.value.images[0].file;
+    mainImage.value = productInfo.value.images[0];
 
     const sizes = productInfo.value.sizes[0];
     productInfo.value.sizes = sizes.split(",");
@@ -188,7 +203,7 @@ onBeforeMount(() => {
 
   const newImageUrl = (images) => {
     const newImages = images.map((image) => {
-      image.file = `https://blackshop-store-api.onrender.com/Images/${image.file}`;
+      image = cld.image(image.cloudinary_id).format("auto").quality("auto");
       return image;
     });
     return newImages;

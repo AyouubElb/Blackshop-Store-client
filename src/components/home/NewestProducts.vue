@@ -20,6 +20,7 @@
 <script setup>
 import { reactive, onBeforeMount } from "vue";
 import { useProducStore } from "@/stores/product";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { defineAsyncComponent } from "vue";
 
 const ProductsHolder = defineAsyncComponent(() =>
@@ -31,9 +32,20 @@ const NewestProducts = reactive([]);
 const productList = reactive([]);
 
 onBeforeMount(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
+
   productStore.fetchAllProducts("createdAt", "desc", 4).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
+      value.images[0] = cld
+        .image(value.images[0].cloudinary_id)
+        .format("auto")
+        .quality("auto");
+
       return value;
     });
     NewestProducts.splice(0, NewestProducts.length, ...data);

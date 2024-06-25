@@ -45,9 +45,6 @@ onBeforeMount(() => {
         .image(value.cloudinary_id)
         .format("auto")
         .quality("auto");
-      // .resize({ width: 282 })
-      // .toUrl({ loading: "lazy" });
-
       return value;
     });
 

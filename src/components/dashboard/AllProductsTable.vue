@@ -39,8 +39,8 @@
                 </div>
               </th>
               <td>
-                <img
-                  :src="product.images[0].file"
+                <AdvancedImage
+                  :cldImg="product.images[0]"
                   :alt="product.name"
                   loading="lazy"
                 />
@@ -97,18 +97,30 @@
 </template>
 <script setup>
 import { onMounted, reactive } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { useProducStore } from "@/stores/product";
 
 const productStore = useProducStore();
 const productList = reactive([]);
 
 onMounted(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
+
   let sortBy = "";
   let order = "";
   productStore.fetchAllProducts(sortBy, order).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
-      console;
+      value.images[0] = cld
+        .image(value.images[0].cloudinary_id)
+        .format("auto")
+        .quality("auto");
+
       const date = new Date(value.createdAt);
 
       value.createdAt = `${date.getFullYear()}-${(date.getMonth() + 1)

@@ -37,6 +37,7 @@
 </template>
 <script setup>
 import { reactive, onMounted, ref, watchEffect } from "vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { useProducStore } from "@/stores/product";
 import { defineAsyncComponent } from "vue";
 
@@ -92,8 +93,14 @@ const editFilter = (index) => {
   });
 };
 
+// Create a Cloudinary instance and set your cloud name.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: "dxupeynms",
+  },
+});
+
 watchEffect(() => {
-  console.log("selectedCategory", productStore.selectedCategory._id);
   let sortBy = "";
   let order = "";
   const filters = {
@@ -101,7 +108,10 @@ watchEffect(() => {
   };
   productStore.searchProducts(sortBy, order, filters).then((res) => {
     const data = res.map((value) => {
-      value.images[0].file = `https://blackshop-store-api.onrender.com/Images/${value.images[0].file}`;
+      value.images[0] = cld
+        .image(value.images[0].cloudinary_id)
+        .format("auto")
+        .quality("auto");
       return value;
     });
     productList.splice(0, productList.length, ...data);

@@ -13,8 +13,8 @@
             query: { id: product._id },
           }"
         >
-          <img
-            :src="product.images[0].file"
+          <AdvancedImage
+            :cldImg="product.images[0]"
             :alt="product.name"
             loading="lazy"
           />
@@ -52,6 +52,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
 import { useProducStore } from "@/stores/product";
 const productStore = useProducStore();
 defineProps(["products", "displayOption"]);
