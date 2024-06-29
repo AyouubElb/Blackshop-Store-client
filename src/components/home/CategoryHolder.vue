@@ -9,7 +9,6 @@
     >
       <div class="category-image-container">
         <div class="category-overlay"></div>
-        <!-- <img :src="category.image" :alt="category.name" loading="lazy" /> -->
         <AdvancedImage :cldImg="category.image" loading="lazy" />
       </div>
       <div class="text-holder">
@@ -32,25 +31,21 @@ const productStore = useProducStore();
 
 const categoryList = reactive([]);
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   // Create a Cloudinary instance and set your cloud name.
   const cld = new Cloudinary({
     cloud: {
       cloudName: "dxupeynms",
     },
   });
-  productStore.fetchCategories().then((res) => {
-    const data = res.map((value) => {
-      value.image = cld
-        .image(value.cloudinary_id)
-        .format("auto")
-        .quality("auto");
-      return value;
-    });
-
-    categoryList.splice(0, categoryList.length, ...data);
-    console.log("categoryList", categoryList);
+  const res = await productStore.fetchCategories();
+  const data = res.map((value) => {
+    value.image = cld.image(value.cloudinary_id).format("auto").quality("auto");
+    return value;
   });
+
+  categoryList.splice(0, categoryList.length, ...data);
+  console.log("categoryList", categoryList);
 });
 
 const categoryClicked = (category) => {

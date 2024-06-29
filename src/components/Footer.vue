@@ -93,15 +93,14 @@ const productStore = useProducStore();
 const categoryList = reactive([]);
 const menuList = reactive([]);
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   // fetch categories
-  productStore.fetchCategories().then((res) => {
-    categoryList.splice(0, categoryList.length, ...res);
-  });
+  const categories = await productStore.fetchCategories();
+  categoryList.splice(0, categoryList.length, ...categories);
+
   // fetch menus
-  productStore.fetchAllMenus().then((res) => {
-    menuList.splice(0, menuList.length, ...res);
-  });
+  const menus = await productStore.fetchAllMenus();
+  menuList.splice(0, menuList.length, ...menus);
 });
 </script>
 <style>

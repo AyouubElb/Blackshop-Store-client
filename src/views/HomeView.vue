@@ -1,54 +1,10 @@
 <template>
   <div class="home-container">
-    <Suspense>
-      <!-- Async component: Hero -->
-      <template #default>
-        <Hero />
-      </template>
-      <template #fallback>
-        <div>Loading Hero...</div>
-      </template>
-    </Suspense>
-
-    <Suspense>
-      <!-- Async component: CategoryHolder -->
-      <template #default>
-        <CategoryHolder />
-      </template>
-      <template #fallback>
-        <div>Loading CategoryHolder...</div>
-      </template>
-    </Suspense>
-
-    <Suspense>
-      <!-- Async component: NewestProducts -->
-      <template #default>
-        <NewestProducts />
-      </template>
-      <template #fallback>
-        <div>Loading NewestProducts...</div>
-      </template>
-    </Suspense>
-
-    <Suspense>
-      <!-- Async component: AddressSection -->
-      <template #default>
-        <AddressSection />
-      </template>
-      <template #fallback>
-        <div>Loading AddressSection...</div>
-      </template>
-    </Suspense>
-
-    <Suspense>
-      <!-- Async component: Footer -->
-      <template #default>
-        <Footer />
-      </template>
-      <template #fallback>
-        <div>Loading Footer...</div>
-      </template>
-    </Suspense>
+    <Hero />
+    <CategoryHolder />
+    <NewestProducts />
+    <AddressSection />
+    <Footer />
   </div>
 </template>
 

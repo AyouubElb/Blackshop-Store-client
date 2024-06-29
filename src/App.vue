@@ -1,8 +1,17 @@
 <template>
   <Navbar v-if="showNavbar()" />
-  <router-view />
+  <Suspense>
+    <template #default>
+      <router-view />
+    </template>
+    <template #fallback>
+      <div class="loading">Loading ...</div>
+    </template>
+  </Suspense>
 </template>
 <script setup>
+import { Suspense } from "vue";
+
 import Navbar from "@/components/Navbar.vue";
 import Spinner from "@/components/Spinner.vue";
 import { useRoute } from "vue-router";
@@ -72,5 +81,10 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

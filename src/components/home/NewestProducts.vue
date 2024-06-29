@@ -31,7 +31,7 @@ const productStore = useProducStore();
 const NewestProducts = reactive([]);
 const productList = reactive([]);
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   // Create a Cloudinary instance and set your cloud name.
   const cld = new Cloudinary({
     cloud: {
@@ -39,18 +39,17 @@ onBeforeMount(() => {
     },
   });
 
-  productStore.fetchAllProducts("createdAt", "desc", 4).then((res) => {
-    const data = res.map((value) => {
-      value.images[0] = cld
-        .image(value.images[0].cloudinary_id)
-        .format("auto")
-        .quality("auto");
+  const res = await productStore.fetchAllProducts("createdAt", "desc", 4);
+  const data = res.map((value) => {
+    value.images[0] = cld
+      .image(value.images[0].cloudinary_id)
+      .format("auto")
+      .quality("auto");
 
-      return value;
-    });
-    NewestProducts.splice(0, NewestProducts.length, ...data);
-    console.log("NewestProducts", NewestProducts);
+    return value;
   });
+  NewestProducts.splice(0, NewestProducts.length, ...data);
+  console.log("NewestProducts", NewestProducts);
 });
 </script>
 <style>
