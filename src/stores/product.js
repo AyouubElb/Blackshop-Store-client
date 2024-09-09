@@ -5,7 +5,7 @@ import toastr from "toastr";
 export const useProducStore = defineStore("ProductStore", {
   state: () => {
     return {
-      API_URL: "https://blackshop-5p7casy16-ayoubs-projects-d0671baa.vercel.app/api",
+      API_URL: "https://blackshop-store-api.onrender.com/api",
       catgories: [],
       selectedCategory: {},
       cartList: [],
